@@ -1,0 +1,19 @@
+command for running the babel:
+babel src/playground/built-it-visible.js --out-file=public/scripts/app.js --presets=env,react --watch
+
+command for running the live-server
+live-server folder-name
+
+/playground/built-it-visible
+ onClick of button text is either made visible or it's hidden depending upon the state variable visible.
+ even the text on button changes 'hide details' or 'show details' based on the state variable 'visible'.
+
+
+ /playground/counter-example
+ three buttons are present +1, +1 and reset.
+ buttons are used to change the value of count displayed on the screen.
+ state variable: count
+ prevState: gives the last updated values of the state variables.
+ '+1 button': increments the count by one using this.setState function and prevState as its parameter.
+ '-1 button': decrements the count by one using this.setState function and prevState as its parameter.
+ 'RESET button': sets the value of count to 0 using this.setState function.
