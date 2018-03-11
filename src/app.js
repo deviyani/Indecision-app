@@ -1,38 +1,12 @@
-// const obj = {
-//     name: 'xyz',
-//     getName() {
-//         return this.name;
-//     }
-// }
-
-// const name = "deviyani";
-// const blambdaG = obj.getName.bind(this);
-// const ulambdaG = obj.getName;
-// // const getName=obj.getName();
-// // const getName = obj.getName.bind();
-// console.log("Bounded lambdaG: ", blambdaG);
-// console.log("Unbounded lambdaG ", ulambdaG);
-// // console.log("Bounded & Executed lambdaG: ", blambdaG());
-// console.log("Bounded & Executed lambdaG, binding while execution: ", blambdaG.bind(this));
-// // console.log("Unbounded & Executed lambdaG: ", ulambdaG());
-// console.log("Unbounded & Executed lambdaG, binding while execution: ", ulambdaG.bind(this));
-
-// console.log("getname2: ");
-// console.log(getname2());
-
-
-
-
-
-
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
+        //getting it's default values from IndecisionApp.defaultProps if nothing is passed
         this.state = {
-            options: []
+            options: props.options
         }
     }
     //used for seting the state variable options as empty array
@@ -68,10 +42,9 @@ class IndecisionApp extends React.Component {
 
     }
     render() {
-        const title = 'INDECISION';
         return (
             <div>
-                <Header title={title} />
+                <Header />
                 <Action hasOption={this.state.options.length > 0} handlePick={this.handlePick} />
                 <Options options={this.state.options} handleDeleteOptions={this.handleDeleteOptions} />
                 <AddOption handleAddOption={this.handleAddOption} />
@@ -87,6 +60,10 @@ const Header = (props) => {
         </div>
     )
 }
+// if no title is passed as props then these defaultProps value of title is used
+Header.defaultProps = {
+    title: 'INDECISION'
+}
 
 const Action = (props) => {
     return (
@@ -97,7 +74,7 @@ const Action = (props) => {
     )
 
 }
- const Options=(props)=>{
+const Options = (props) => {
     let arr = props.options;
     return (
         <div>
@@ -107,7 +84,7 @@ const Action = (props) => {
 
         </div>
     );
- }
+}
 
 //this function is used for rendering the options on screen
 const Option = (props) => {
@@ -147,22 +124,8 @@ class AddOption extends React.Component {
         );
     }
 }
-ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
 
-
-
-//demo for stateless functional component
-/*
-const User = (props) => {
-    return (
-        <div>
-            <p>Name:{props.name}</p>
-            <p>Age:{props.age}</p>
-        </div>
-    )
-
-
+IndecisionApp.defaultProps = {
+    options: ['eat', 'sleep', 'work']
 }
-
-ReactDOM.render(<User name="Jane Doe" age={26} />, document.getElementById('app'))
-*/
+ReactDOM.render(<IndecisionApp options={["Option one","Option two"]}/>, document.getElementById('app'))

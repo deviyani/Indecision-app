@@ -8,29 +8,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// const obj = {
-//     name: 'xyz',
-//     getName() {
-//         return this.name;
-//     }
-// }
-
-// const name = "deviyani";
-// const blambdaG = obj.getName.bind(this);
-// const ulambdaG = obj.getName;
-// // const getName=obj.getName();
-// // const getName = obj.getName.bind();
-// console.log("Bounded lambdaG: ", blambdaG);
-// console.log("Unbounded lambdaG ", ulambdaG);
-// // console.log("Bounded & Executed lambdaG: ", blambdaG());
-// console.log("Bounded & Executed lambdaG, binding while execution: ", blambdaG.bind(this));
-// // console.log("Unbounded & Executed lambdaG: ", ulambdaG());
-// console.log("Unbounded & Executed lambdaG, binding while execution: ", ulambdaG.bind(this));
-
-// console.log("getname2: ");
-// console.log(getname2());
-
-
 var IndecisionApp = function (_React$Component) {
     _inherits(IndecisionApp, _React$Component);
 
@@ -42,8 +19,9 @@ var IndecisionApp = function (_React$Component) {
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
+        //getting it's default values from IndecisionApp.defaultProps if nothing is passed
         _this.state = {
-            options: []
+            options: props.options
         };
         return _this;
     }
@@ -88,11 +66,10 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var title = 'INDECISION';
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, { title: title }),
+                React.createElement(Header, null),
                 React.createElement(Action, { hasOption: this.state.options.length > 0, handlePick: this.handlePick }),
                 React.createElement(Options, { options: this.state.options, handleDeleteOptions: this.handleDeleteOptions }),
                 React.createElement(AddOption, { handleAddOption: this.handleAddOption })
@@ -114,6 +91,10 @@ var Header = function Header(props) {
             props.title
         )
     );
+};
+// if no title is passed as props then these defaultProps value of title is used
+Header.defaultProps = {
+    title: 'INDECISION'
 };
 
 var Action = function Action(props) {
@@ -205,20 +186,7 @@ var AddOption = function (_React$Component2) {
     return AddOption;
 }(React.Component);
 
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
-
-//demo for stateless functional component
-/*
-const User = (props) => {
-    return (
-        <div>
-            <p>Name:{props.name}</p>
-            <p>Age:{props.age}</p>
-        </div>
-    )
-
-
-}
-
-ReactDOM.render(<User name="Jane Doe" age={26} />, document.getElementById('app'))
-*/
+IndecisionApp.defaultProps = {
+    options: ['eat', 'sleep', 'work']
+};
+ReactDOM.render(React.createElement(IndecisionApp, { options: ["Option one", "Option two"] }), document.getElementById('app'));
