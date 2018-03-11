@@ -80,58 +80,44 @@ class IndecisionApp extends React.Component {
     }
 }
 
-
-class Header extends React.Component {
-
-    render() {
-        console.log(this.props)
-        return (
-            <div>
-                <h1> {this.props.title}</h1>
-            </div>
-        )
-    }
+const Header = (props) => {
+    return (
+        <div>
+            <h1> {props.title}</h1>
+        </div>
+    )
 }
 
-class Action extends React.Component {
-    render() {
-        return (
-            <div>
-                {/* depending on whether there are any options in the state variable options the button is enabled/disabled */}
-                <button onClick={this.props.handlePick} disabled={!this.props.hasOption}>What should I do?</button>
-            </div>
-        )
-    }
-}
-class Options extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
-        let arr = this.props.options;
-        return (
-            <div>
-                {/* onClick of button all the options are deleted */}
-                <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-                {arr.map((option) => <Option key={option} optionText={option} />)}
-
-            </div>
-        );
-    }
-}
-//this class is used for rendering the options on screen
-class Option extends React.Component {
-    render() {
-        return (
-            <div>
-                {this.props.optionText}
-            </div>
-        );
-    }
+const Action = (props) => {
+    return (
+        <div>
+            {/* depending on whether there are any options in the state variable options the button is enabled/disabled */}
+            <button onClick={props.handlePick} disabled={!props.hasOption}>What should I do?</button>
+        </div>
+    )
 
 }
+ const Options=(props)=>{
+    let arr = props.options;
+    return (
+        <div>
+            {/* onClick of button all the options are deleted */}
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {arr.map((option) => <Option key={option} optionText={option} />)}
+
+        </div>
+    );
+ }
+
+//this function is used for rendering the options on screen
+const Option = (props) => {
+    return (
+        <div>
+            {props.optionText}
+        </div>
+    );
+}
+
 class AddOption extends React.Component {
     constructor(props) {
         super(props);
@@ -161,5 +147,22 @@ class AddOption extends React.Component {
         );
     }
 }
-
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
+
+
+
+//demo for stateless functional component
+/*
+const User = (props) => {
+    return (
+        <div>
+            <p>Name:{props.name}</p>
+            <p>Age:{props.age}</p>
+        </div>
+    )
+
+
+}
+
+ReactDOM.render(<User name="Jane Doe" age={26} />, document.getElementById('app'))
+*/
