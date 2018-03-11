@@ -8,60 +8,47 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var IndecisionApp = function (_React$Component) {
-    _inherits(IndecisionApp, _React$Component);
+var Counter = function (_React$Component) {
+    _inherits(Counter, _React$Component);
 
-    function IndecisionApp(props) {
-        _classCallCheck(this, IndecisionApp);
+    function Counter(props) {
+        _classCallCheck(this, Counter);
 
-        var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-        _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
-        _this.handlePick = _this.handlePick.bind(_this);
-        _this.handleAddOption = _this.handleAddOption.bind(_this);
-        //getting it's default values from IndecisionApp.defaultProps if nothing is passed
+        _this.increase = _this.increase.bind(_this);
+        _this.decrease = _this.decrease.bind(_this);
+        _this.reset = _this.reset.bind(_this);
         _this.state = {
-            options: props.options
+            count: props.count
         };
         return _this;
     }
-    //used for seting the state variable options as empty array
 
-
-    _createClass(IndecisionApp, [{
-        key: 'handleDeleteOptions',
-        value: function handleDeleteOptions() {
-            this.setState(function () {
+    _createClass(Counter, [{
+        key: 'increase',
+        value: function increase() {
+            this.setState(function (prevState) {
                 return {
-                    options: []
+                    count: prevState.count + 1
                 };
             });
         }
-        //randomly chooses one of the options entered in the state variable options(array);
-
     }, {
-        key: 'handlePick',
-        value: function handlePick() {
-            //randomly selects the index 
-            var randomNum = Math.floor(Math.random() * this.state.options.length);
-            //random index element in options array is alerted
-            var options = this.state.options[randomNum];
-            alert(options);
+        key: 'decrease',
+        value: function decrease() {
+            var count = this.state.count;
+            this.setState({
+                count: count -= 1
+            });
         }
     }, {
-        key: 'handleAddOption',
-        value: function handleAddOption(option) {
-            if (!option) {
-                return 'Enter valid option';
-            } else if (this.state.options.indexOf(option) > -1) {
-                return 'Option already exists';
-            } else {
-                this.setState(function (prevState) {
-                    return {
-                        options: prevState.options.concat(option)
-                    };
-                });
-            }
+        key: 'reset',
+        value: function reset() {
+            var count = this.state.count;
+            this.setState({
+                count: 0
+            });
         }
     }, {
         key: 'render',
@@ -69,124 +56,35 @@ var IndecisionApp = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, null),
-                React.createElement(Action, { hasOption: this.state.options.length > 0, handlePick: this.handlePick }),
-                React.createElement(Options, { options: this.state.options, handleDeleteOptions: this.handleDeleteOptions }),
-                React.createElement(AddOption, { handleAddOption: this.handleAddOption })
-            );
-        }
-    }]);
-
-    return IndecisionApp;
-}(React.Component);
-
-var Header = function Header(props) {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'h1',
-            null,
-            ' ',
-            props.title
-        )
-    );
-};
-// if no title is passed as props then these defaultProps value of title is used
-Header.defaultProps = {
-    title: 'INDECISION'
-};
-
-var Action = function Action(props) {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'button',
-            { onClick: props.handlePick, disabled: !props.hasOption },
-            'What should I do?'
-        )
-    );
-};
-var Options = function Options(props) {
-    var arr = props.options;
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'button',
-            { onClick: props.handleDeleteOptions },
-            'Remove All'
-        ),
-        arr.map(function (option) {
-            return React.createElement(Option, { key: option, optionText: option });
-        })
-    );
-};
-
-//this function is used for rendering the options on screen
-var Option = function Option(props) {
-    return React.createElement(
-        'div',
-        null,
-        props.optionText
-    );
-};
-
-var AddOption = function (_React$Component2) {
-    _inherits(AddOption, _React$Component2);
-
-    function AddOption(props) {
-        _classCallCheck(this, AddOption);
-
-        var _this2 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
-
-        _this2.handleAddOption = _this2.handleAddOption.bind(_this2);
-        _this2.state = {
-            error: undefined
-        };
-        return _this2;
-    }
-
-    _createClass(AddOption, [{
-        key: 'handleAddOption',
-        value: function handleAddOption(e) {
-            e.preventDefault();
-            var option = e.target.elements.option.value.trim();
-            var error = this.props.handleAddOption(option);
-            this.setState = {
-                error: error //error:error
-            };
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
-                this.state.error && React.createElement(
-                    'p',
+                React.createElement(
+                    'h1',
                     null,
-                    this.state.error
+                    ' COUNT:',
+                    this.state.count
                 ),
                 React.createElement(
-                    'form',
-                    { onSubmit: this.handleAddOption },
-                    React.createElement('input', { type: 'text', name: 'option' }),
-                    React.createElement(
-                        'button',
-                        null,
-                        'Submit'
-                    )
+                    'button',
+                    { onClick: this.increase },
+                    '+1'
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.decrease },
+                    '-1'
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.reset },
+                    'RESET'
                 )
             );
         }
     }]);
 
-    return AddOption;
+    return Counter;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-    options: ['eat', 'sleep', 'work']
+Counter.defaultProps = {
+    count: 0
 };
-ReactDOM.render(React.createElement(IndecisionApp, { options: ["Option one", "Option two"] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(Counter, { count: 22 }), document.getElementById('app'));

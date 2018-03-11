@@ -1,22 +1,18 @@
 
 class Counter extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.increase = this.increase.bind(this);
         this.decrease = this.decrease.bind(this);
         this.reset = this.reset.bind(this);
         this.state = {
-            count: 0
+            count: props.count
         }
     }
     increase() {
-        // let count = this.state.count;
-        // this.setState({
-        //     count: (count += 1)
-        // })
-        this.setState((prevState)=>{
-            return{
-                count:prevState.count+1
+        this.setState((prevState) => {
+            return {
+                count: prevState.count + 1
             }
 
         })
@@ -45,4 +41,8 @@ class Counter extends React.Component {
     }
 
 }
-ReactDOM.render(<Counter />, document.getElementById('app'));
+
+Counter.defaultProps = {
+    count: 0
+}
+ReactDOM.render(<Counter count={22}/>, document.getElementById('app'));
