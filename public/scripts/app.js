@@ -26,10 +26,36 @@ var IndecisionApp = function (_React$Component) {
         };
         return _this;
     }
-    //used for seting the state variable options as empty array
-
 
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem('options');
+                var options = JSON.parse(json);
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (e) {
+                //do nothing
+            }
+
+            console.log("component mounted");
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.options.length !== this.state.options.length) {
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+                console.log("data saved");
+            }
+        }
+        //used for seting the state variable options as empty array
+
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
@@ -39,10 +65,10 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'handleDeleteOption',
         value: function handleDeleteOption(optionToRemove) {
-            this.setState(prevState = {
-                options: prevState.options.filter(function (option) {
-                    return optionToRemove !== option;
-                })
+            this.setState(function (prevState) {
+                return { options: prevState.options.filter(function (option) {
+                        return optionToRemove !== option;
+                    }) };
             });
         }
         //randomly chooses one of the options entered in the state variable options(array);
@@ -177,9 +203,12 @@ var AddOption = function (_React$Component2) {
             e.preventDefault();
             var option = e.target.elements.option.value.trim();
             var error = this.props.handleAddOption(option);
-            this.setState = {
-                error: error //error:error
-            };
+            this.setState(function () {
+                return { error: error };
+            });
+            if (!error) {
+                e.target.elements.option.value = '';
+            }
         }
     }, {
         key: 'render',
