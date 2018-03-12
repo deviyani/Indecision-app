@@ -17,3 +17,7 @@ live-server folder-name
  '+1 button': increments the count by one using this.setState function and prevState as its parameter.
  '-1 button': decrements the count by one using this.setState function and prevState as its parameter.
  'RESET button': sets the value of count to 0 using this.setState function.
+
+***localStorage can be used to save certain data like state variables in this case and on refreshing the page the state variables are restored with the values stored in it.
+data is saved in the format of (key,value) in localStorage.
+It saves data as string.

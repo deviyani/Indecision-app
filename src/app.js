@@ -5,11 +5,12 @@ class IndecisionApp extends React.Component {
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        //getting it's default values from IndecisionApp.defaultProps if nothing is passed
+        //getting it's from saved data in localStorage
         this.state = {
-            options: props.options
+            options: []
         }
     }
+// fetches the value stored for options in localStorage and passes it to state 'options' after parsing it
     componentDidMount() {
         try {
             const json = localStorage.getItem('options');
@@ -20,11 +21,10 @@ class IndecisionApp extends React.Component {
         } catch (e) {
             //do nothing
         }
-
-
-
         console.log("component mounted")
     }
+    //checks for the changes in state 'options' as compared to it's previous state.
+    // if changes are there then it is saved in localStorage.
     componentDidUpdate(prevProps, prevState) {
         if (prevState.options.length !== this.state.options.length) {
             const json = JSON.stringify(this.state.options);
@@ -160,7 +160,4 @@ class AddOption extends React.Component {
     }
 }
 
-IndecisionApp.defaultProps = {
-    options: ['eat', 'sleep', 'work']
-}
 ReactDOM.render(<IndecisionApp options={["Option one", "Option two"]} />, document.getElementById('app'))
